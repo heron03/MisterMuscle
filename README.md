@@ -13,5 +13,9 @@
 
 ```sh git commit -m "Mensagem de commit" 
 git checkout -b Sua-Branch 
+git status
+git add .
+git commit -m "Mensagem de Commit"
+git pull origin master
 git push --set-upstream origin Sua-Branch 
 ```

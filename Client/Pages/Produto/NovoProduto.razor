@@ -1,0 +1,92 @@
+@page "/produto/cadastro"
+
+<style>
+    .tamanho {
+        margin-bottom: 25px;
+        display: inline-block;
+    }
+    .tamanho2 {
+        margin-top: 25px;
+    }
+    .link{
+        color: white;
+        text-decoration: none !important;  
+    }
+    .link:hover{
+        color: white !important;
+    }
+    .btn{
+        width: 150px;
+        margin: 20px;
+    }      
+</style>
+
+
+<div class="container">
+  <div class="row col-sm-12 justify-content-around">
+    <div class="row col-sm-6">
+      <div class="card col-sm-12 px-lg-1">
+        <div class="card-body justify-content-end">
+        <p>Imagem do Produto</p>
+          <div class="card col-sm-12">
+            <img src="https://static3.tcdn.com.br/img/img_prod/677409/whey_protein_concentrado_60_ftw_baunilha_chocolate_e_morango_900g_414_1_20190829165318.jpg" class="img-fluid" alt="Imagem responsiva">
+            <div class="card-body">
+            </div>
+          </div>
+          <hr>          
+          <div class="custom-file">
+            <input type="imagem" class="InputImagem" id="ImagemProdutoVal" required>
+            <label class="custom-file-label" for="ImagemProdutoVal">Escolha a Imagem...</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row col-sm-6">
+      <div class="card col-sm-12 px-lg-1">
+        <div class="card-body">
+          <p>Cadastro de Produto</p>
+          <form>            
+            <div class="form-group">
+              <label>Nome</label>
+              <input class="form-control" id="nomeProduto" placeholder="Nome do produto">
+            </div>
+            <div class="form-group">
+              <label>Descrição</label>
+              <input class="form-control" id="nomeProduto" placeholder="Descrição do produto">
+            </div>
+            <div class="form-group">
+              <label>Preço</label>
+              <input class="form-control" id="nomeProduto" placeholder="Preço do produto">
+            </div>
+            <div class="form-group">
+              <label>Categoria</label>
+                <select class="form-control" id="nomeProduto" placeholder="Categoria do produto">
+                <option selected>Categoria do Produto</option>
+                <option value="1">Teste 1</option>
+                <option value="2">Teste 2</option>
+                <option value="3">Teste 3</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <label>Fornecedor</label>
+              <input class="form-control" id="fornecedorProduto" placeholder="Fornecedor do produto">
+            </div>
+             <div class="form-group">
+              <label>Quantidade</label>
+              <input type="number" class="form-control" placeholder="Quantidade do produto">
+            </div>
+           <div class="col-12 d-flex justify-content-center text-centerr">
+                <button class="btn btn-secondary" type="refresh">
+                    <NavLink class="link" href="./produto">
+                        <span aria-hidden="true"></span> Cancelar
+                    </NavLink>
+                </button>
+                <button class="btn btn-primary" type="submit">Salvar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>

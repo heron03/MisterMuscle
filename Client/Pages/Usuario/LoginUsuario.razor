@@ -1,0 +1,52 @@
+@page "/Login"
+
+<div class="d-flex justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-secondary">
+            <div class="card-header bg-dark text-white">
+                <h4 class="card-title mt-2">Fazer Login</h4>
+            </div>
+            <div class="card-body">
+                <EditForm Model="@usuario" @onreset="HandleReset">
+                    <DataAnnotationsValidator />
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label>E-mail</label>
+                            <InputText @bind-Value="usuario.Email" class="form-control" />
+                            <ValidationMessage For="@(() => usuario.Email)" />
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label>Senha</label>
+                            <InputText type="password" @bind-Value="usuario.Senha" class="form-control" />
+                            <ValidationMessage For="@(() => usuario.Senha)" />
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary mr-1">Enviar</button>
+                        <button type="reset" class="btn btn-secondary">Resetar</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+@code {
+    Usuario usuario = new Usuario();
+
+    private EditContext editContext { get; set; }
+
+    private void HandleReset()
+    {
+        usuario = new Usuario();
+        editContext = new EditContext(usuario);
+    }
+}

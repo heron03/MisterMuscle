@@ -1,47 +1,40 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">ProjetoIntegrador</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
+﻿<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">
+        <img src="img/logo.png" asp-append-version="true" style="width:60px;">
+    </a>
+    <form>
+        <div class=" bg-light  border-0 rounded  shadow-sm">
+            <div class="input-group">
+                <input type="search" placeholder="Buscar Produto" aria-describedby="button-addon1"
+                class="form-control border-0 bg-light">
+                <div class="input-group-append">
+                    <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i
+                        class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <ul class="navbar-nav ml-md-auto">
+        <li class="nav-item pl-2 pr-1 mx-1 py-3">
+            <a href="\Login"><p class="text-white"> Entrar</p></a>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
+        <li class="nav-item pl-2 pr-1 mx-1 py-3">
+            <a href="\Cadastro"><p class="text-white"> Cadastrar-se</p></a>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/Login">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Login
-            </NavLink>
+        <li class="nav-item dropdown">
+            <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+                <h4><i class="fas fa-user text-white"></i></h4>
+            </a>
+            <div class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions">
+                <a class="dropdown-item" href="">Meus Dados</a>
+                <a class="dropdown-item" href="">Compras</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/produto/cadastro">Cadastrar Produtos</a>
+            </div>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/Cadastro" Match="NavLinkMatch.All">
-                <span class="oi oi-plus " aria-hidden="true"></span> Cadastre-se
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/produto" Match="NavLinkMatch.All">
-                <span class="oi oi-plus " aria-hidden="true"></span> Cadastrar Produto
-            </NavLink>
+        <li class="nav-item pl-2 pr-1 mx-1 py-3">
+            <h4> <i class="fas fa-shopping-cart text-white"></i></h4>
         </li>
     </ul>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
+</nav>

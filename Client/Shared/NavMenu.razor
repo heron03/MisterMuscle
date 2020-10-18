@@ -2,7 +2,7 @@
     <a class="navbar-brand" href="#">
         <img src="img/logo.png" asp-append-version="true" style="width:60px;">
     </a>
-    <form action="">
+    <form>
         <div class=" bg-light  border-0 rounded  shadow-sm">
             <div class="input-group">
                 <input type="search" placeholder="Buscar Produto" aria-describedby="button-addon1"
@@ -14,13 +14,26 @@
             </div>
         </div>
     </form>
-
-
     <ul class="navbar-nav ml-md-auto">
-        <li class="nav-item pl-2 pr-1 mx-1 py-3 my-n2">
-            <h4><i class="fas fa-user text-white"></i></h4>
+        <li class="nav-item pl-2 pr-1 mx-1 py-3">
+            <a href="\Login"><p class="text-white"> Entrar</p></a>
         </li>
-        <li class="nav-item pl-2 pr-1 mx-1 py-3 my-n2">
+        <li class="nav-item pl-2 pr-1 mx-1 py-3">
+            <a href="\Cadastro"><p class="text-white"> Cadastrar-se</p></a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+                <h4><i class="fas fa-user text-white"></i></h4>
+            </a>
+            <div class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions">
+                <a class="dropdown-item" href="">Meus Dados</a>
+                <a class="dropdown-item" href="">Compras</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/produto/cadastro">Cadastrar Produtos</a>
+            </div>
+        </li>
+        <li class="nav-item pl-2 pr-1 mx-1 py-3">
             <h4> <i class="fas fa-shopping-cart text-white"></i></h4>
         </li>
     </ul>

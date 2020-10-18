@@ -1,47 +1,27 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">ProjetoIntegrador</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
+﻿<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">
+        <img src="img/logo.png" asp-append-version="true" style="width:60px;">
+    </a>
+    <form action="">
+        <div class=" bg-light  border-0 rounded  shadow-sm">
+            <div class="input-group">
+                <input type="search" placeholder="Buscar Produto" aria-describedby="button-addon1"
+                class="form-control border-0 bg-light">
+                <div class="input-group-append">
+                    <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i
+                        class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
+
+    <ul class="navbar-nav ml-md-auto">
+        <li class="nav-item pl-2 pr-1 mx-1 py-3 my-n2">
+            <h4><i class="fas fa-user text-white"></i></h4>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/cadastre-se" Match="NavLinkMatch.All">
-                <span class="oi oi-plus " aria-hidden="true"></span> Cadastre-se
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/produto" Match="NavLinkMatch.All">
-                <span class="oi oi-plus " aria-hidden="true"></span> Cadastrar Produto
-            </NavLink>
+        <li class="nav-item pl-2 pr-1 mx-1 py-3 my-n2">
+            <h4> <i class="fas fa-shopping-cart text-white"></i></h4>
         </li>
     </ul>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
+</nav>

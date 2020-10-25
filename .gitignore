@@ -9,6 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+Server/appsettings.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -58,6 +59,7 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+Server/appsettings.json
 
 # StyleCop
 StyleCopReport.xml

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace ProjetoIntegrador.Server
@@ -23,6 +24,8 @@ namespace ProjetoIntegrador.Server
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddDbContext<AppDbContext>(o =>
+                o.UseMySql(Configuration.GetConnectionString("MisterMuscle")));
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

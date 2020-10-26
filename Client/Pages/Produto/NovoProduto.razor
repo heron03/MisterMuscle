@@ -73,11 +73,11 @@
                     <ValidationMessage For="@(() => produto.Categoria)" />
                   </select>              
                 </div>
-                <div class="form-group">
+                @* <div class="form-group">
                   <label>Fornecedor</label>
                   <InputText @bind-Value="produto.Fornecedor" class="form-control"  placeholder="Fornecedor do produto" />
                   <ValidationMessage For="@(() => produto.Fornecedor)" />
-                </div>
+                </div> *@
                 <div class="form-group">
                   <label>Quantidade</label>
                   <InputNumber @bind-Value="produto.Quantidade" class="form-control"  placeholder="Quantidade no Estoque" />

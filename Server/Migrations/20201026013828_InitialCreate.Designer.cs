@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ProjetoIntegrador.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20201026011158_InitialCreate")]
+    [Migration("20201026013828_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -113,16 +113,23 @@ namespace ProjetoIntegrador.Server.Migrations
                     b.Property<int>("Id_usuario")
                         .HasColumnType("int");
 
+                    b.Property<int?>("NotaFiscalId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UsuarioId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("data")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<int>("id_notafiscal")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("total")
                         .HasColumnType("decimal(65,30)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("NotaFiscalId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Pedidos");
                 });
@@ -133,15 +140,20 @@ namespace ProjetoIntegrador.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Categoria")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<int>("CategoriaId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Fornecedor")
+                    b.Property<int?>("EstoqueId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FornecedorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImagemProduto")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -157,6 +169,12 @@ namespace ProjetoIntegrador.Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoriaId");
+
+                    b.HasIndex("EstoqueId");
+
+                    b.HasIndex("FornecedorId");
+
                     b.ToTable("Produtos");
                 });
 
@@ -166,10 +184,10 @@ namespace ProjetoIntegrador.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("id_pedido")
+                    b.Property<int?>("PedidoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("id_produto")
+                    b.Property<int?>("ProdutoId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("preco_total_produto")
@@ -182,6 +200,10 @@ namespace ProjetoIntegrador.Server.Migrations
                         .HasColumnType("decimal(65,30)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PedidoId");
+
+                    b.HasIndex("ProdutoId");
 
                     b.ToTable("ProdutoPedidos");
                 });
@@ -220,6 +242,47 @@ namespace ProjetoIntegrador.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("ProjetoIntegrador.Shared.Pedido", b =>
+                {
+                    b.HasOne("ProjetoIntegrador.Shared.NotaFiscal", "NotaFiscal")
+                        .WithMany()
+                        .HasForeignKey("NotaFiscalId");
+
+                    b.HasOne("ProjetoIntegrador.Shared.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId");
+                });
+
+            modelBuilder.Entity("ProjetoIntegrador.Shared.Produto", b =>
+                {
+                    b.HasOne("ProjetoIntegrador.Shared.Categoria", "Categoria")
+                        .WithMany()
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjetoIntegrador.Shared.Estoque", "Estoque")
+                        .WithMany()
+                        .HasForeignKey("EstoqueId");
+
+                    b.HasOne("ProjetoIntegrador.Shared.Fornecedor", "Fornecedor")
+                        .WithMany()
+                        .HasForeignKey("FornecedorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProjetoIntegrador.Shared.ProdutoPedido", b =>
+                {
+                    b.HasOne("ProjetoIntegrador.Shared.Pedido", "Pedido")
+                        .WithMany("ProdutoPedido")
+                        .HasForeignKey("PedidoId");
+
+                    b.HasOne("ProjetoIntegrador.Shared.Produto", "Produto")
+                        .WithMany("ProdutoPedido")
+                        .HasForeignKey("ProdutoId");
                 });
 #pragma warning restore 612, 618
         }

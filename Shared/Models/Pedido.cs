@@ -15,7 +15,9 @@ namespace ProjetoIntegrador.Shared
         public decimal total { get; set; }
         [DataType(DataType.Date)]
         public DateTime data { get; set; }
-        public int id_notafiscal { get; set; }
+        public NotaFiscal NotaFiscal { get; set; }
+        public Usuario Usuario { get; set; }
+        public List<ProdutoPedido> ProdutoPedido { get; set; }
 
     }
 }

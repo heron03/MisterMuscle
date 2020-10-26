@@ -5,7 +5,11 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Net.Http;
+using Microsoft.AspNetCore.Components;
+using System;
 
 namespace ProjetoIntegrador.Server
 {
@@ -23,8 +27,22 @@ namespace ProjetoIntegrador.Server
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddDbContext<AppDbContext>(o =>
+                o.UseMySql(Configuration.GetConnectionString("MisterMuscle")));
             services.AddControllersWithViews();
             services.AddRazorPages();
+            if (!services.Any(x => x.ServiceType == typeof(HttpClient)))
+            {
+                // Configura o HttpClient para o lado do servidor 
+                services.AddScoped<HttpClient>(s =>
+                {
+                    var uriHelper = s.GetRequiredService<NavigationManager>();
+                    return new HttpClient
+                    {
+                        BaseAddress = new Uri(uriHelper.BaseUri)
+                    };
+                });
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

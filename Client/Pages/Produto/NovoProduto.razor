@@ -1,45 +1,22 @@
 @page "/produto/cadastro"
 
-<style>
-    .tamanho {
-        margin-bottom: 25px;
-        display: inline-block;
-    }
-    .tamanho2 {
-        margin-top: 25px;
-    }
-    .link{
-        color: white;
-        text-decoration: none !important;  
-    }
-    .link:hover{
-        color: white !important;
-    }
-    .btn{
-        width: 150px;
-        margin: 20px;
-    }      
-</style>
 
-
-<div class="container">
-  <EditForm Model="@produto" OnValidSubmit="Create">
+<div class="container mt-4 mb-4">
+  <EditForm Model="@produto" @onreset="Reset">
     <DataAnnotationsValidator/>
       <div class="row col-sm-12 justify-content-around">
         <div class="row col-sm-6">
           <div class="card col-sm-12 px-lg-1">
             <div class="card-body justify-content-end">
             <p>Imagem do Produto</p>
-              <div class="card col-sm-12">
+              @* <div class="card col-sm-12">
                 <img src="https://static3.tcdn.com.br/img/img_prod/677409/whey_protein_concentrado_60_ftw_baunilha_chocolate_e_morango_900g_414_1_20190829165318.jpg" class="img-fluid" alt="Imagem responsiva">
-                <div class="card-body">
-                </div>
-              </div>
+              </div> *@
+              <ImagemProduto ImagemRemota="produto.Imagem" />
               <hr >          
-              <div class="custom-file">
-                <input type="imagem" class="InputImagem" id="ImagemProdutoVal">
-                <label class="custom-file-label" for="ImagemProdutoVal">Escolha a Imagem...</label>
-              </div>
+              <div class="form-group row">
+                    <InputFile OnChange="HandleFile"></InputFile>
+                </div>
             </div>
           </div>
         </div>
@@ -47,7 +24,7 @@
           <div class="card col-sm-12 px-lg-1">
             <div class="card-body">
               <p>Cadastro de Produto</p>
-              <form>            
+                          
                 <div class="form-group">
                   <label>Nome</label>
                   <InputText @bind-Value="produto.Nome" class="form-control"  placeholder="Nome do produto" />
@@ -64,34 +41,12 @@
                   <ValidationMessage For="@(() => produto.Preco)" />
                 </div>
                 <div class="form-group">
-                  <label>Categoria</label>
-                  <select  @bind="produto.Categoria" class="form-control"  placeholder="Fornecedor do produto">
-                    <option value="1">Teste 1</option>
-                    <option value="1">Teste 1</option>
-                    <option value="2">Teste 2</option>
-                    <option value="3">Teste 3</option>
-                    <ValidationMessage For="@(() => produto.Categoria)" />
-                  </select>              
-                </div>
-                <div class="form-group">
-                  <label>Fornecedor</label>
-                  <InputText @bind-Value="produto.Fornecedor" class="form-control"  placeholder="Fornecedor do produto" />
-                  <ValidationMessage For="@(() => produto.Fornecedor)" />
-                </div>
-                <div class="form-group">
                   <label>Quantidade</label>
                   <InputNumber @bind-Value="produto.Quantidade" class="form-control"  placeholder="Quantidade no Estoque" />
                   <ValidationMessage For="@(() => produto.Quantidade)" />
                 </div>
-              </form>
-              <div class="col-12 d-flex justify-content-center text-centerr">
-                  <button type="submit" class="btn btn-primary">Salvar</button>
-                  <button class="btn btn-secondary">
-                    <NavLink class="link" href="/produto">
-                      <span aria-hidden="true"></span> Cancelar
-                    </NavLink>
-                  </button>                
-                </div>
+                
+
             </div>
           </div>
         </div>
@@ -103,11 +58,32 @@
 
 @code {
     private Produto produto = new Produto();
+
+    public byte[] ImagemUpload { get; set;}
     private EditContext editContext { get; set; }
 
-    private void Create()
+    private void Reset()
     {
         produto = new Produto();
         editContext = new EditContext(produto);
     }
+
+    async Task HandleFile(IFileListEntry[] files)
+    {
+      var file = files.FirstOrDefault();
+      if(file != null)
+      {
+        var ms = new MemoryStream();
+        await file.Data.CopyToAsync(ms);
+        ImagemUpload = ms.ToArray();
+      }
+
+      if(ImagemUpload != null)
+      {
+        produto.Imagem = ImagemUpload;
+        ImagemUpload = null;
+      }
+    }
+
+
 }

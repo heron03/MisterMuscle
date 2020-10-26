@@ -176,4 +176,11 @@ app {
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
+
+
+.viewport-100 {
+    min-height: 100vh;
+}
+
+
 }

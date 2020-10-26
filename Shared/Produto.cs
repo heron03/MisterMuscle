@@ -7,7 +7,7 @@ using System.Text;
 namespace ProjetoIntegrador.Shared {
     
     public class Produto{
-        [Required]
+        
         public int Id { get; set; }
         
         [Required(ErrorMessage="O campo nome é obrigatório")]
@@ -18,17 +18,19 @@ namespace ProjetoIntegrador.Shared {
 
         [Required]
         [RegularExpression("(.*[1-9].*)|(.*[.].*[1-9].*)", ErrorMessage="Informe o preço do produto")]
+        
 
         public decimal Preco { get; set; }
 
-        [Required(ErrorMessage="Selecione uma categoria")]
-        public string Categoria { get; set; }
+        [Required(ErrorMessage = "É obrigatório o produto possuir uma imagem!")]
+        public byte[] Imagem { get; set; }
 
-        [Required(ErrorMessage="Selecione o fornecedor")]
-        public string Fornecedor { get; set; }
-        
         [Required]
-        [RegularExpression("(.*[1-9].*)|(.*[.].*[1-9].*)", ErrorMessage="Informe a quantidade do produto no estoque") ]
+        [RegularExpression("(.*[1-9].*)|(.*[.].*[1-9].*)", ErrorMessage="Informe a quantidade do produto")]
         public int Quantidade { get; set; }
+
+        
+        
+        
     }
 }

@@ -10,8 +10,8 @@ namespace ProjetoIntegrador.Shared
     public class ProdutoPedido
     {
         [Required]
+        public int Id { get; set; }
         public int id_produto { get; set; }
-        [Required]
         public int id_pedido { get; set; }
 
         public decimal preco_unitario_produto { get; set; }

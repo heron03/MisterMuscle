@@ -13,6 +13,7 @@ namespace ProjetoIntegrador.Shared
         public int Id { get; set; }
         public int Id_usuario { get; set; }
         public decimal total { get; set; }
+        [DataType(DataType.Date)]
         public DateTime data { get; set; }
         public int id_notafiscal { get; set; }
 

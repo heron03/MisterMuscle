@@ -8,7 +8,7 @@ namespace ProjetoIntegrador.Shared {
     
     public class Categoria{
         [Required]
-        public int id_categoria { get; set; }
+        public int Id { get; set; }
         
         public string descricao_categoria { get; set; }
     }

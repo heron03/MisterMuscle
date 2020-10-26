@@ -14,8 +14,8 @@ namespace ProjetoIntegrador.Shared {
         public string Nome { get; set; }
 
         [Required(ErrorMessage="O campo e-mail é obrigatório")]
-        [DataType(DataType.EmailAddress)]
-        [EmailAddress]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Informe um email válido...")]
+        [EmailAddress(ErrorMessage = "Informe um email válido...")]
         public string Email { get; set; }
 
         [Required(ErrorMessage="O campo CPF é obrigatório")]
@@ -34,7 +34,7 @@ namespace ProjetoIntegrador.Shared {
         
         [Required(ErrorMessage="O campo confirme sua senha é obrigatório")]
         [DataType(DataType.Password)]
-        [CompareProperty("Senha")]
+        [CompareProperty("Senha", ErrorMessage = "As senhas Informadas são diferentes")]
         public string Confirmarsenha { get; set; }
     }
 }

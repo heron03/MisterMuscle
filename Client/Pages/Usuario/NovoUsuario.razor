@@ -1,4 +1,6 @@
 @page "/Cadastro"
+@inject HttpClient  http
+@inject NavigationManager NavigationManager
 
 <div class="d-flex justify-content-center">
     <div class="col-md-6">
@@ -7,7 +9,7 @@
                 <h4 class="card-title mt-2">Cadastre-se</h4>
             </div>
             <div class="card-body">
-                <EditForm Model="@usuario" @onreset="HandleReset">
+                <EditForm Model="@usuario" @onreset="HandleReset"  OnValidSubmit="CreateUsuario">
                     <DataAnnotationsValidator />
                     <div class="form-row">
                         <div class="form-group col">
@@ -74,7 +76,13 @@
 @* falta implementar o valid submit no controller *@
 
 @code {
+    
     private Usuario usuario = new Usuario();
+    protected async Task CreateUsuario()
+    {
+        await http.PostAsJsonAsync("/Usuario/Create", usuario);
+        NavigationManager.NavigateTo("/");
+    }
     private EditContext editContext { get; set; }
 
     private void HandleReset()

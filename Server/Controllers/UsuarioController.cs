@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Security.Cryptography;
 
 [ApiController]
 [Route("[controller]")]
@@ -30,6 +31,7 @@ public class UsuarioController : Controller
                 Cpf = usuario.Cpf,
                 Senha = usuario.Senha,
                 Celular = usuario.Celular,
+                Confirmarsenha = usuario.Confirmarsenha,
             };
 
             db.Add(newUsuario);

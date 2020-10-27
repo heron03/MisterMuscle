@@ -1,4 +1,8 @@
 @page "/produto/cadastro"
+@using System.Net.Http
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
 
 
 <div class="container mt-4 mb-4">
@@ -12,7 +16,7 @@
               @* <div class="card col-sm-12">
                 <img src="https://static3.tcdn.com.br/img/img_prod/677409/whey_protein_concentrado_60_ftw_baunilha_chocolate_e_morango_900g_414_1_20190829165318.jpg" class="img-fluid" alt="Imagem responsiva">
               </div> *@
-              <ImagemProduto ImagemRemota="produto.Imagem" />
+              <ImagemProduto ImagemRemota="produto.ImagemProduto" />
               <hr >          
               <div class="form-group row">
                     <InputFile OnChange="HandleFile"></InputFile>
@@ -46,7 +50,10 @@
                   <ValidationMessage For="@(() => produto.Quantidade)" />
                 </div>
                 
-
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary mr-1">Enviar</button>
+                    <button type="reset" class="btn btn-secondary">Limpar</button>
+                  </div>
             </div>
           </div>
         </div>
@@ -80,10 +87,20 @@
 
       if(ImagemUpload != null)
       {
-        produto.Imagem = ImagemUpload;
+        produto.ImagemProduto = ImagemUpload;
         ImagemUpload = null;
       }
     }
+
+     private async Task HandleValidSubmit()
+    {
+        //Enviar dados para o Controller no Backend
+        var teste = await Http.PostAsJsonAsync("Produto/Create", produto);
+        @* NavigationManager.NavigateTo("/Produto/ListarProduto"); *@
+
+    }
+
+    //implementar onValidSubmit
 
 
 }

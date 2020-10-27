@@ -36,16 +36,18 @@ namespace ProjetoIntegrador.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("qtd_entrada")
+                    b.Property<int>("ProdutoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("qtd_estoque_atual")
+                    b.Property<int>("Quantidade")
                         .HasColumnType("int");
 
-                    b.Property<int>("qtd_saida")
+                    b.Property<int>("tipo_transacao")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProdutoId");
 
                     b.ToTable("Estoques");
                 });
@@ -82,7 +84,7 @@ namespace ProjetoIntegrador.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Fornecedors");
+                    b.ToTable("Fornecedores");
                 });
 
             modelBuilder.Entity("ProjetoIntegrador.Shared.NotaFiscal", b =>
@@ -99,7 +101,7 @@ namespace ProjetoIntegrador.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("NotaFiscals");
+                    b.ToTable("NotaFiscais");
                 });
 
             modelBuilder.Entity("ProjetoIntegrador.Shared.Pedido", b =>
@@ -108,13 +110,10 @@ namespace ProjetoIntegrador.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Id_usuario")
+                    b.Property<int>("NotaFiscalId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("NotaFiscalId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("data")
@@ -125,7 +124,8 @@ namespace ProjetoIntegrador.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NotaFiscalId");
+                    b.HasIndex("NotaFiscalId")
+                        .IsUnique();
 
                     b.HasIndex("UsuarioId");
 
@@ -145,15 +145,11 @@ namespace ProjetoIntegrador.Server.Migrations
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("EstoqueId")
-                        .HasColumnType("int");
-
                     b.Property<int>("FornecedorId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImagemProduto")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<byte[]>("ImagemProduto")
+                        .HasColumnType("longblob");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -169,8 +165,6 @@ namespace ProjetoIntegrador.Server.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.HasIndex("EstoqueId");
-
                     b.HasIndex("FornecedorId");
 
                     b.ToTable("Produtos");
@@ -178,14 +172,10 @@ namespace ProjetoIntegrador.Server.Migrations
 
             modelBuilder.Entity("ProjetoIntegrador.Shared.ProdutoPedido", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("PedidoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PedidoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProdutoId")
+                    b.Property<int>("ProdutoId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("preco_total_produto")
@@ -197,9 +187,7 @@ namespace ProjetoIntegrador.Server.Migrations
                     b.Property<decimal>("quantidade_produto")
                         .HasColumnType("decimal(65,30)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("PedidoId");
+                    b.HasKey("PedidoId", "ProdutoId");
 
                     b.HasIndex("ProdutoId");
 
@@ -242,31 +230,40 @@ namespace ProjetoIntegrador.Server.Migrations
                     b.ToTable("Usuarios");
                 });
 
+            modelBuilder.Entity("ProjetoIntegrador.Shared.Estoque", b =>
+                {
+                    b.HasOne("ProjetoIntegrador.Shared.Produto", "Produto")
+                        .WithMany("Estoques")
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ProjetoIntegrador.Shared.Pedido", b =>
                 {
                     b.HasOne("ProjetoIntegrador.Shared.NotaFiscal", "NotaFiscal")
-                        .WithMany()
-                        .HasForeignKey("NotaFiscalId");
+                        .WithOne("Pedido")
+                        .HasForeignKey("ProjetoIntegrador.Shared.Pedido", "NotaFiscalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjetoIntegrador.Shared.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId");
+                        .WithMany("Pedidos")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProjetoIntegrador.Shared.Produto", b =>
                 {
                     b.HasOne("ProjetoIntegrador.Shared.Categoria", "Categoria")
-                        .WithMany()
+                        .WithMany("Produtos")
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjetoIntegrador.Shared.Estoque", "Estoque")
-                        .WithMany()
-                        .HasForeignKey("EstoqueId");
-
                     b.HasOne("ProjetoIntegrador.Shared.Fornecedor", "Fornecedor")
-                        .WithMany()
+                        .WithMany("Produtos")
                         .HasForeignKey("FornecedorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -276,11 +273,15 @@ namespace ProjetoIntegrador.Server.Migrations
                 {
                     b.HasOne("ProjetoIntegrador.Shared.Pedido", "Pedido")
                         .WithMany("ProdutoPedido")
-                        .HasForeignKey("PedidoId");
+                        .HasForeignKey("PedidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjetoIntegrador.Shared.Produto", "Produto")
                         .WithMany("ProdutoPedido")
-                        .HasForeignKey("ProdutoId");
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

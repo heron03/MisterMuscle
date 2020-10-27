@@ -36,5 +36,7 @@ namespace ProjetoIntegrador.Shared {
         [DataType(DataType.Password)]
         [CompareProperty("Senha", ErrorMessage = "As senhas Informadas são diferentes")]
         public string Confirmarsenha { get; set; }
+
+        public ICollection<Pedido> Pedidos { get; set; }
     }
 }

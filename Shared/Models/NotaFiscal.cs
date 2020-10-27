@@ -15,5 +15,7 @@ namespace ProjetoIntegrador.Shared
         [DataType(DataType.Date)]
         public DateTime data { get; set; }
         public string cpf_comprador { get; set; }
+
+        public Pedido Pedido { get; set; }
     }
 }

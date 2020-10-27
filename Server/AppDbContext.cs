@@ -8,10 +8,16 @@ public class AppDbContext : DbContext
       : base(options)
     {
     }
+
+    protected override void OnModelCreating(ModelBuilder mb)
+    {
+      mb.Entity<ProdutoPedido>()
+        .HasKey(pp => new {pp.PedidoId, pp.ProdutoId});
+    }
     public DbSet<Categoria> Categorias { get; set; }
     public DbSet<Estoque> Estoques { get; set; }
-    public DbSet<Fornecedor> Fornecedors { get; set; }
-    public DbSet<NotaFiscal> NotaFiscals { get; set; }
+    public DbSet<Fornecedor> Fornecedores { get; set; }
+    public DbSet<NotaFiscal> NotaFiscais { get; set; }
     public DbSet<Pedido> Pedidos { get; set; }
     public DbSet<Produto> Produtos { get; set; }
     public DbSet<ProdutoPedido> ProdutoPedidos { get; set; }

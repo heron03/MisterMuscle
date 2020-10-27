@@ -11,9 +11,10 @@ namespace ProjetoIntegrador.Shared
     {
         [Required]
         public int Id { get; set; }
+        public int tipo_transacao { get; set; }
+        public int Quantidade { get; set; }
 
-        public int qtd_entrada { get; set; }
-        public int qtd_saida { get; set; }
-        public int qtd_estoque_atual { get; set; }
+        public Produto Produto { get; set; }
+        public int ProdutoId { get; set; }
     }
 }

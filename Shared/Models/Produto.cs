@@ -22,18 +22,25 @@ namespace ProjetoIntegrador.Shared
         [RegularExpression("(.*[1-9].*)|(.*[.].*[1-9].*)", ErrorMessage = "Informe o preço do produto")]
 
         public decimal Preco { get; set; }
-
-        [Required(ErrorMessage = "Selecione o fornecedor")]
-        public Fornecedor Fornecedor { get; set; }
-
-        [Required(ErrorMessage = "Selecione uma categoria")]
-        public Categoria Categoria { get; set; }
-        public Estoque Estoque { get; set; }
+        public byte[] ImagemProduto { get; set; }
 
         [Required]
         [RegularExpression("(.*[1-9].*)|(.*[.].*[1-9].*)", ErrorMessage = "Informe a quantidade do produto no estoque")]
-        public string ImagemProduto { get; set; }
         public int Quantidade { get; set; }
+
+        [Required(ErrorMessage = "Selecione o fornecedor")]
+        public int FornecedorId { get; set;}
+        
+        public int CategoriaId { get; set; }
+
+
+
         public ICollection<ProdutoPedido> ProdutoPedido { get; set; }
+
+        public ICollection<Estoque> Estoques { get; set;}
+        public Categoria Categoria { get; set; }
+        public Fornecedor Fornecedor { get; set; }
+
+        
     }
 }

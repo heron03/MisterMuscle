@@ -11,5 +11,7 @@ namespace ProjetoIntegrador.Shared {
         public int Id { get; set; }
         
         public string descricao_categoria { get; set; }
+
+        public ICollection<Produto> Produtos { get; set;}
     }
 }

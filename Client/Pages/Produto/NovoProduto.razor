@@ -6,16 +6,13 @@
 
 
 <div class="container mt-4 mb-4">
-  <EditForm Model="@produto" @onreset="Reset">
+  <EditForm Model="@produto" @onreset="Reset" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator/>
       <div class="row col-sm-12 justify-content-around">
         <div class="row col-sm-6">
           <div class="card col-sm-12 px-lg-1">
             <div class="card-body justify-content-end">
             <p>Imagem do Produto</p>
-              @* <div class="card col-sm-12">
-                <img src="https://static3.tcdn.com.br/img/img_prod/677409/whey_protein_concentrado_60_ftw_baunilha_chocolate_e_morango_900g_414_1_20190829165318.jpg" class="img-fluid" alt="Imagem responsiva">
-              </div> *@
               <ImagemProduto ImagemRemota="produto.ImagemProduto" />
               <hr >          
               <div class="form-group row">
@@ -96,7 +93,9 @@
     {
         //Enviar dados para o Controller no Backend
         var teste = await Http.PostAsJsonAsync("Produto/Create", produto);
-        @* NavigationManager.NavigateTo("/Produto/ListarProduto"); *@
+        NavigationManager.NavigateTo("/Produtos");
+        
+        
 
     }
 

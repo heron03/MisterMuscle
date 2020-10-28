@@ -8,11 +8,11 @@ using System.Linq;
 
 [ApiController]
 [Route("[controller]")]
-public class ProductController : Controller
+public class ProdutoController : Controller
 {
     private readonly AppDbContext db;
 
-    public ProductController(AppDbContext db)
+    public ProdutoController(AppDbContext db)
     {
         this.db = db;
     }
@@ -23,6 +23,7 @@ public class ProductController : Controller
     {
         var produtos = await db.Produtos.ToListAsync();
         return Ok(produtos);
+        
     }
 
     
@@ -40,9 +41,9 @@ public class ProductController : Controller
                 Preco = produto.Preco,
                 ImagemProduto = produto.ImagemProduto,
                 Quantidade = produto.Quantidade,
-                FornecedorId = produto.FornecedorId,
-                CategoriaId = produto.CategoriaId,
-
+                FornecedorId = 1,
+                CategoriaId = 1,
+                
             };
            
 

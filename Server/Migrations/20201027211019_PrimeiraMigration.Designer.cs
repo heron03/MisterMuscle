@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ProjetoIntegrador.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20201027012513_PrimeiraMigration")]
+    [Migration("20201027211019_PrimeiraMigration")]
     partial class PrimeiraMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

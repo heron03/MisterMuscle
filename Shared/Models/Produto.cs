@@ -25,10 +25,10 @@ namespace ProjetoIntegrador.Shared
         public byte[] ImagemProduto { get; set; }
 
         [Required]
-        [RegularExpression("(.*[1-9].*)|(.*[.].*[1-9].*)", ErrorMessage = "Informe a quantidade do produto no estoque")]
+        [RegularExpression("(.*[1-9].*)|(.*[.].*[1-9].*)", ErrorMessage = "Informe a quantidade do produto que será inserida")]
         public int Quantidade { get; set; }
 
-        [Required(ErrorMessage = "Selecione o fornecedor")]
+        
         public int FornecedorId { get; set;}
         
         public int CategoriaId { get; set; }

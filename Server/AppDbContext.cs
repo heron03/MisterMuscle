@@ -13,6 +13,8 @@ public class AppDbContext : DbContext
     {
       mb.Entity<ProdutoPedido>()
         .HasKey(pp => new {pp.PedidoId, pp.ProdutoId});
+      mb.Entity<Carrinho>()
+        .HasKey(carrinho => new {carrinho.UsuarioId, carrinho.ProdutoId});
     }
     public DbSet<Categoria> Categorias { get; set; }
     public DbSet<Estoque> Estoques { get; set; }

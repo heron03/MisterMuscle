@@ -4,10 +4,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjetoIntegrador.Server.Migrations
 {
-    public partial class PrimeiraMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Carrinho",
+                columns: table => new
+                {
+                    UsuarioId = table.Column<int>(nullable: false),
+                    ProdutoId = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carrinho", x => new { x.UsuarioId, x.ProdutoId });
+                });
+
             migrationBuilder.CreateTable(
                 name: "Categorias",
                 columns: table => new
@@ -66,11 +79,19 @@ namespace ProjetoIntegrador.Server.Migrations
                     Cpf = table.Column<string>(maxLength: 11, nullable: false),
                     Senha = table.Column<string>(nullable: false),
                     Celular = table.Column<string>(nullable: false),
-                    Confirmarsenha = table.Column<string>(nullable: false)
+                    Confirmarsenha = table.Column<string>(nullable: false),
+                    CarrinhoProdutoId = table.Column<int>(nullable: true),
+                    CarrinhoUsuarioId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Carrinho_CarrinhoUsuarioId_CarrinhoProdutoId",
+                        columns: x => new { x.CarrinhoUsuarioId, x.CarrinhoProdutoId },
+                        principalTable: "Carrinho",
+                        principalColumns: new[] { "UsuarioId", "ProdutoId" },
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,7 +106,9 @@ namespace ProjetoIntegrador.Server.Migrations
                     ImagemProduto = table.Column<byte[]>(nullable: true),
                     Quantidade = table.Column<int>(nullable: false),
                     FornecedorId = table.Column<int>(nullable: false),
-                    CategoriaId = table.Column<int>(nullable: false)
+                    CategoriaId = table.Column<int>(nullable: false),
+                    CarrinhoProdutoId = table.Column<int>(nullable: true),
+                    CarrinhoUsuarioId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -102,6 +125,12 @@ namespace ProjetoIntegrador.Server.Migrations
                         principalTable: "Fornecedores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Produtos_Carrinho_CarrinhoUsuarioId_CarrinhoProdutoId",
+                        columns: x => new { x.CarrinhoUsuarioId, x.CarrinhoProdutoId },
+                        principalTable: "Carrinho",
+                        principalColumns: new[] { "UsuarioId", "ProdutoId" },
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -210,6 +239,16 @@ namespace ProjetoIntegrador.Server.Migrations
                 name: "IX_Produtos_FornecedorId",
                 table: "Produtos",
                 column: "FornecedorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Produtos_CarrinhoUsuarioId_CarrinhoProdutoId",
+                table: "Produtos",
+                columns: new[] { "CarrinhoUsuarioId", "CarrinhoProdutoId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_CarrinhoUsuarioId_CarrinhoProdutoId",
+                table: "Usuarios",
+                columns: new[] { "CarrinhoUsuarioId", "CarrinhoProdutoId" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -237,6 +276,9 @@ namespace ProjetoIntegrador.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Fornecedores");
+
+            migrationBuilder.DropTable(
+                name: "Carrinho");
         }
     }
 }

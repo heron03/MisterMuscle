@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ProjetoIntegrador.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20201027211019_PrimeiraMigration")]
-    partial class PrimeiraMigration
+    [Migration("20201028013831_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -17,6 +17,22 @@ namespace ProjetoIntegrador.Server.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("ProjetoIntegrador.Shared.Carrinho", b =>
+                {
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("UsuarioId", "ProdutoId");
+
+                    b.ToTable("Carrinho");
+                });
 
             modelBuilder.Entity("ProjetoIntegrador.Shared.Categoria", b =>
                 {
@@ -140,6 +156,12 @@ namespace ProjetoIntegrador.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int?>("CarrinhoProdutoId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CarrinhoUsuarioId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
@@ -168,6 +190,8 @@ namespace ProjetoIntegrador.Server.Migrations
                     b.HasIndex("CategoriaId");
 
                     b.HasIndex("FornecedorId");
+
+                    b.HasIndex("CarrinhoUsuarioId", "CarrinhoProdutoId");
 
                     b.ToTable("Produtos");
                 });
@@ -202,6 +226,12 @@ namespace ProjetoIntegrador.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int?>("CarrinhoProdutoId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CarrinhoUsuarioId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Celular")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -228,6 +258,8 @@ namespace ProjetoIntegrador.Server.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CarrinhoUsuarioId", "CarrinhoProdutoId");
 
                     b.ToTable("Usuarios");
                 });
@@ -269,6 +301,10 @@ namespace ProjetoIntegrador.Server.Migrations
                         .HasForeignKey("FornecedorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ProjetoIntegrador.Shared.Carrinho", null)
+                        .WithMany("Produtos")
+                        .HasForeignKey("CarrinhoUsuarioId", "CarrinhoProdutoId");
                 });
 
             modelBuilder.Entity("ProjetoIntegrador.Shared.ProdutoPedido", b =>
@@ -284,6 +320,13 @@ namespace ProjetoIntegrador.Server.Migrations
                         .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ProjetoIntegrador.Shared.Usuario", b =>
+                {
+                    b.HasOne("ProjetoIntegrador.Shared.Carrinho", null)
+                        .WithMany("Usuarios")
+                        .HasForeignKey("CarrinhoUsuarioId", "CarrinhoProdutoId");
                 });
 #pragma warning restore 612, 618
         }

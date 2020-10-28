@@ -24,10 +24,9 @@ namespace ProjetoIntegrador.Server.Migrations
                     b.Property<int>("ProdutoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
                     b.HasKey("UsuarioId", "ProdutoId");
+
+                    b.HasIndex("ProdutoId");
 
                     b.ToTable("Carrinho");
                 });
@@ -154,12 +153,6 @@ namespace ProjetoIntegrador.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("CarrinhoProdutoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CarrinhoUsuarioId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
@@ -188,8 +181,6 @@ namespace ProjetoIntegrador.Server.Migrations
                     b.HasIndex("CategoriaId");
 
                     b.HasIndex("FornecedorId");
-
-                    b.HasIndex("CarrinhoUsuarioId", "CarrinhoProdutoId");
 
                     b.ToTable("Produtos");
                 });
@@ -224,12 +215,6 @@ namespace ProjetoIntegrador.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("CarrinhoProdutoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CarrinhoUsuarioId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Celular")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -257,9 +242,22 @@ namespace ProjetoIntegrador.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarrinhoUsuarioId", "CarrinhoProdutoId");
-
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("ProjetoIntegrador.Shared.Carrinho", b =>
+                {
+                    b.HasOne("ProjetoIntegrador.Shared.Produto", "Produtos")
+                        .WithMany()
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjetoIntegrador.Shared.Usuario", "Usuarios")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProjetoIntegrador.Shared.Estoque", b =>
@@ -299,10 +297,6 @@ namespace ProjetoIntegrador.Server.Migrations
                         .HasForeignKey("FornecedorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("ProjetoIntegrador.Shared.Carrinho", null)
-                        .WithMany("Produtos")
-                        .HasForeignKey("CarrinhoUsuarioId", "CarrinhoProdutoId");
                 });
 
             modelBuilder.Entity("ProjetoIntegrador.Shared.ProdutoPedido", b =>
@@ -318,13 +312,6 @@ namespace ProjetoIntegrador.Server.Migrations
                         .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ProjetoIntegrador.Shared.Usuario", b =>
-                {
-                    b.HasOne("ProjetoIntegrador.Shared.Carrinho", null)
-                        .WithMany("Usuarios")
-                        .HasForeignKey("CarrinhoUsuarioId", "CarrinhoProdutoId");
                 });
 #pragma warning restore 612, 618
         }

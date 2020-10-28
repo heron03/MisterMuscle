@@ -1,0 +1,42 @@
+@page "/Produtos"
+@using System.Net.Http
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+
+ <div class="container mb-4 viewport-100 mt-4">
+     @foreach(var produto in ListaProdutos)
+{
+   
+        <div class="card shadow-lg bg-white rounded teste">
+            <ImagemProduto ImagemRemota="@produto.ImagemProduto"/>
+            <div class="card-body">
+                <h5 class="card-title text-center text-primary">@produto.Nome</h5>
+                <p class="card-text text-center text-secondary">@produto.Descricao</p>
+                <p class="card-text text-center text-secondary">@String.Format("{0, 0:C2}", @produto.Preco)</p>
+            </div>
+        </div>
+    
+
+}
+
+</div>
+
+
+
+
+
+@code {
+    public List<Produto> ListaProdutos = new List<Produto>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var produtos = await Http.GetFromJsonAsync<List<Produto>>("/Produto/List");
+        foreach (var item in produtos)
+        {
+            ListaProdutos.Add(item);
+        }
+    }
+}

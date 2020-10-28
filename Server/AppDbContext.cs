@@ -17,6 +17,7 @@ public class AppDbContext : DbContext
         .HasKey(carrinho => new {carrinho.UsuarioId, carrinho.ProdutoId});
     }
     public DbSet<Categoria> Categorias { get; set; }
+    public DbSet<Carrinho> Carrinhos { get; set; }
     public DbSet<Estoque> Estoques { get; set; }
     public DbSet<Fornecedor> Fornecedores { get; set; }
     public DbSet<NotaFiscal> NotaFiscais { get; set; }
